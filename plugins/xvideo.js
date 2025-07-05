@@ -1,95 +1,70 @@
-const config = require('../config');
-const {cmd , commands} = require('../command');
+const { cmd } = require('../command')
 const { fetchJson } = require('../lib/functions')
-const axios = require('axios');
-const cheerio = require('cheerio');
+
+const apilink = 'https://www.dark-yasiya-api.site/' // API LINK ( DO NOT CHANGE THIS!! )
+
+
 
 cmd({
-    pattern: "xvid",
-    alias: ["xvideo"],
-    use: '.xvid <query>',
+    pattern: "xvideo",
+    alias: ["xvdl","xvdown"],
     react: "🔞",
-    desc: "xvideo download",
+    desc: "Download xvideo.com porn video",
     category: "download",
+    use: '.xvideo < text >',
     filename: __filename
-}, async (messageHandler, context, quotedMessage, { from, q, reply }) => {
-    try {
-        if (!q) return reply('⭕ *Please Provide Search Terms.*');
+},
+async(conn, mek, m,{from, quoted, reply, q }) => {
+try{
 
-        let res = await fetchJson(`https://raganork-network.vercel.app/api/xvideos/search?query=${q}`);
-        
-        if (!res || !res.result || res.result.length === 0) return reply("N_FOUND");
+  if(!q) return await reply("𝖯𝗅𝖾𝖺𝗌𝖾 𝖦𝗂𝗏𝖾 𝗆𝖾 𝖥𝖾𝗐 𝖶𝗈𝗋𝖽 !")
+    
+const xv_list = await fetchJson(`${apilink}/search/xvideo?text=${q}`)
+if(xv_list.result.length < 0) return await reply("Not results found !")
 
-        const data = res.result.slice(0, 10);
-        
-        if (data.length < 1) return await messageHandler.sendMessage(from, { text: "⭕ *I Couldn't Find Anything 🙄*" }, { quoted: quotedMessage });
+const xv_info = await fetchJson(`${apilink}/download/xvideo?url=${xv_list.result[0].url}`)
+    
+  // FIRST VIDEO
+  
+const msg = `
+        🔞 *𝐒𝐄𝐍𝐔-𝐌𝐃 𝐗𝐕𝐈𝐃𝐄𝐎 𝐃𝐋* 🔞
+    
+🥵 *ᴛɪᴛʟᴇ* - ${xv_info.result.title}
+🥵 *ᴠɪᴇᴡꜱ* - ${xv_info.result.views}
+🥵 *ʟɪᴋᴇ* - ${xv_info.result.like}
 
-        let message = `*🔞 QUEEN NETHU MD XVIDEO DOWNLOADER 🔞*\n\n`;
-        let options = '';
+> 𝐏𝐎𝐖𝐄𝐑𝐄𝐃 𝐁𝐘 𝐒𝐄𝐍𝐔-𝐌𝐃 💛`
 
-        data.forEach((v, index) => {
-            options += `${index + 1}. *${v.title}*\n\n`;
-        });
-        
-        message += options;
-        message += `> ⚜️ _𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝_ *- :* *_SL NETHU MAX_ ᵀᴹ*\n\n`;
+// Sending the image with caption
+          const sentMsg = await conn.sendMessage(from, {
 
-        const sentMessage = await messageHandler.sendMessage(from, {
-            image: { url: `https://i.ibb.co/ntvzPr8/s-Wuxk4b-KHr.jpg` },
-            caption: message
-        }, { quoted: quotedMessage });
 
-        session[from] = {
-            searchResults: data,
-            messageId: sentMessage.key.id,
-        };
+          text: msg,
+          contextInfo: {
 
-        const handleUserReply = async (update) => {
-            const userMessage = update.messages[0];
+          forwardingScore: 999,
+          isForwarded: true,
+          forwardedNewsletterMessageInfo: {
+          newsletterName: '𝐒𝐄𝐍𝐔-𝐌𝐃',
+          newsletterJid: "120363388320701164@newsletter,
+          },
+          externalAdReply: {
+              title: `𝐒𝐄𝐍𝐔-𝐌𝐃 Xvideo Downloader`,
+              body: `Can't Find The Information. You Can Try Another Way. Error Code 4043`,
+              thumbnailUrl: xv_info.result.image,
+              sourceUrl: ``,
+              mediaType: 1,
+              renderLargerThumbnail: true
+              }
+                  }
+              }, { quoted: mek });
 
-            if (!userMessage.message.extendedTextMessage ||
-                userMessage.message.extendedTextMessage.contextInfo.stanzaId !== sentMessage.key.id) {
-                return;
-            }
+// SEND VIDEO
+await conn.sendMessage(from, { document: { url: xv_info.result.dl_link }, mimetype: "video/mp4", fileName: xv_info.result.title, caption: xv_info.result.title }, { quoted: mek });
 
-            const userReply = userMessage.message.extendedTextMessage.text.trim();
-            const videoIndexes = userReply.split(',').map(x => parseInt(x.trim()) - 1);
 
-            for (let index of videoIndexes) {
-                if (isNaN(index) || index < 0 || index >= data.length) {
-                    return reply("⭕ *Please Enter Valid Numbers From The List.*");
-                }
-            }
-
-            for (let index of videoIndexes) {
-                const selectedVideo = data[index];
-
-                try {
-                    let downloadRes = await fetchJson(`https://raganork-network.vercel.app/api/xvideos/download?url=${selectedVideo.url}`);
-                    let videoUrl = downloadRes.url;
-
-                    if (!videoUrl) {
-                        return reply(`⭕ *Failed To Fetch Video* for "${selectedVideo.title}".`);
-                    }
-
-                    await messageHandler.sendMessage(from, {
-                        video: { url: videoUrl },
-                        caption: `${selectedVideo.title}\n\n> ⚜️ _𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝_ *- :* *_SL NETHU MAX_ ᵀᴹ*`
-                    });
-
-                } catch (err) {
-                    console.error(err);
-                    return reply(`⭕ *An Error Occurred While Downloading "${selectedVideo.title}".*`);
-                }
-            }
-
-            delete session[from];
-        };
-
-        messageHandler.ev.on("messages.upsert", handleUserReply);
-
-    } catch (error) {
-        console.error(error);
-        await messageHandler.sendMessage(from, { text: '⭕ *Error Occurred During The Process!*' }, { quoted: quotedMessage });
-    }
-});
+} catch (error) {
+console.log(error)
+reply(error)
+}
+})
