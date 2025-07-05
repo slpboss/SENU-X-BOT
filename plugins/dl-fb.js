@@ -44,7 +44,9 @@ async(conn, mek, m, {
       await conn.sendMessage(from, {
         video: { url: fb.result.sd },
         mimetype: "video/mp4",
-        caption: `*SD-Quality*`
+        caption: `*🎬 Facebook Video
+📌 Quality: SD
+✅ POWERED BY SENU X BOT*`
       }, { quoted: mek });
     }
 
@@ -52,7 +54,9 @@ if (fb.result.hd) {
       await conn.sendMessage(from, {
         video: { url: fb.result.hd },
         mimetype: "video/mp4",
-        caption: `*HD-Quality*`
+        caption: `*🎬 Facebook Video
+📌 Quality: HD
+✅ POWERED BY SENU X BOT*`
       }, { quoted: mek });
     }
 
