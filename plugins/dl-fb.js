@@ -30,6 +30,7 @@ async(conn, mek, m, {
   let caption = `*ꜱᴇɴᴜ x ʙᴏᴛ*
 
 📝 ᴛɪᴛʟᴇ : Facebook video
+🦸‍♀️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : SENU X
 🔗 ᴜʀʟ : ${q}`;
 
 
@@ -44,9 +45,7 @@ async(conn, mek, m, {
       await conn.sendMessage(from, {
         video: { url: fb.result.sd },
         mimetype: "video/mp4",
-        caption: `*🎬 Facebook Video
-📌 Quality: SD
-✅ POWERED BY SENU X BOT*`
+        caption: `*SD-Quality*`
       }, { quoted: mek });
     }
 
@@ -54,9 +53,7 @@ if (fb.result.hd) {
       await conn.sendMessage(from, {
         video: { url: fb.result.hd },
         mimetype: "video/mp4",
-        caption: `*🎬 Facebook Video
-📌 Quality: HD
-✅ POWERED BY SENU X BOT*`
+        caption: `*HD-Quality*`
       }, { quoted: mek });
     }
 
