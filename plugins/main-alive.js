@@ -13,18 +13,18 @@ cmd({
 },
 async (conn, mek, m, { from, sender, reply }) => {
     try {
-        const status = `
-╭───〔 *🤖 ${config.BOT_NAME} STATUS* 〕───◉
-│✨ *Bot is Active & Online!*
-│
-│🧠 *Owner:* ${config.OWNER_NAME}
-│⚡ *Version:* 4.0.0
-│📝 *Prefix:* [${config.PREFIX}]
-│📳 *Mode:* [${config.MODE}]
-│💾 *RAM:* ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${(os.totalmem() / 1024 / 1024).toFixed(2)}MB
-│🖥️ *Host:* ${os.hostname()}
-│⌛ *Uptime:* ${runtime(process.uptime())}
-╰────────────────────◉
+        const status =`👋 ${monspace} ʜᴇʟʟᴏᴡ, ɪ'ᴍ ꜱᴇɴᴜ ᴍᴅ  ${pushname}, ɪ'ᴍ ᴀʟɪᴠᴇ ɴᴏᴡ ${monspace}
+
+_*ᴛʜɪꜱ Qᴜᴇᴇɴ ꜱᴇɴᴜ ᴍᴅ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ɪꜱ ᴍᴀᴅᴇ ꜰᴏʀ ʏᴏᴜʀ ᴇᴀꜱʏ ᴛᴏ ᴜꜱᴇ. ᴛʜɪꜱ ʙᴏᴛ ɪꜱ ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴄᴛɪᴠᴇ🪄*_
+
+> *`ᴠᴇʀꜱɪᴏɴ`:* 4.0.0
+> *`ᴏᴡɴᴇʀ`*  ${config.OWNER_NAME}
+> *`Memory`:* ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${(os.totalmem() / 1024 / 1024).toFixed(2)}MB
+> *`ʀᴜɴᴛɪᴍᴇ`:* ${runtime(process.uptime())}
+> *`Hostname`:* ${os.hostname}
+
+*☘️ `ꜰᴏʟʟᴏᴡ ᴍʏ ᴄʜᴀɴɴᴇʟ`:* https://whatsapp.com/channel/0029Vb2OcviBFLgPzVjWhE0n
+
 > ${config.DESCRIPTION}`;
 
         await conn.sendMessage(from, {
