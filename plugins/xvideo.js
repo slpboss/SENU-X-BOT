@@ -46,7 +46,7 @@ const msg = `
           isForwarded: true,
           forwardedNewsletterMessageInfo: {
           newsletterName: '𝐒𝐄𝐍𝐔-𝐌𝐃',
-          newsletterJid: "120363388320701164@newsletter,
+          newsletterJid: "120363388320701164@newsletter",
           },
           externalAdReply: {
               title: `𝐒𝐄𝐍𝐔-𝐌𝐃 Xvideo Downloader`,
