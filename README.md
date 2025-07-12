@@ -2,7 +2,7 @@
 
 -----------
 
-![Image](https://files.catbox.moe/f08cck.jpg)
+![Image](https://i.ibb.co/ynXXSRPM/Queen-Rashu-Md.jpg)
 
 -----------
 -----------
